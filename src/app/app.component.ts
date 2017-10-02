@@ -1,4 +1,3 @@
-
 import {
   AfterViewInit, Component, ElementRef, ViewChild, trigger,
   state,
@@ -7,47 +6,32 @@ import {
   animate,
   keyframes, OnInit
 } from '@angular/core';
-import {TweenMax} from 'gsap';
-import {TimelineMax} from 'gsap';
-import {Linear} from 'gsap';
-
+import * as gsap from "gsap";
+import TimelineMax = gsap.TimelineMax;
+import TweenMax = gsap.TweenMax;
+import TweenConfig = gsap.TweenConfig;
+import Linear = gsap.Linear;
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  animations: [
-    trigger('rotateSun', [
-      transition('*<=>*', [
-        style({
-          transform: 'rotate(180deg)',
-        })
-        ,animate('980ms')] ),
-    ]),
-
-
-  ]
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit, OnInit{
+export class AppComponent implements AfterViewInit{
   title = 'app';
   shaObj : any;
   hash : String;
   astrounaut1 : any;
   @ViewChild('sun') sun : ElementRef;
   anim : any;
-  state: boolean = true;
+  tweenConfig: TweenConfig;
 
-  ngAfterViewInit(){
-    setInterval(() => {
-      this.state = !this.state
-    }, 1000);
+  ngAfterViewInit()
+  {
+    new TimelineMax({repeat: -1})
+      .add(TweenMax.to(this.sun.nativeElement, 5, {rotation: +360, ease: Linear.easeNone}));
   }
-
-  ngOnInit(){
-
-  }
-
   constructor( ){
 
   }
